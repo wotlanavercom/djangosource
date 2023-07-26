@@ -11,8 +11,8 @@ urlpatterns = [
     path("<int:question_id>/", detail, name="detail"),
     # 투표결과 보여주기
     # http://127.0.0.1:8000/polls/1/results/
-    path("<int:question_id>/", results, name="results"),
+    path("<int:question_id>/results", results, name="results"),
     # 투표하기
     # http://127.0.0.1:8000/polls/1/vote/
-    path("<int:question_id>/", vote, name="vote"),
+    path("<int:question_id>/vote/", vote, name="vote"),
 ]
