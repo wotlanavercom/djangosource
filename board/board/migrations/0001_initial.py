@@ -8,28 +8,60 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Question',
+            name="Question",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('subject', models.CharField(max_length=200, verbose_name='제목')),
-                ('content', models.TextField(verbose_name='내용')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='작성날짜')),
-                ('modified_at', models.DateTimeField(blank=True, null=True, verbose_name='수정날짜')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("subject", models.CharField(max_length=200, verbose_name="제목")),
+                ("content", models.TextField(verbose_name="내용")),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="작성날짜"),
+                ),
+                (
+                    "modified_at",
+                    models.DateTimeField(blank=True, null=True, verbose_name="수정날짜"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Answer',
+            name="Answer",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.TextField(verbose_name='내용')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='작성날짜')),
-                ('modified_at', models.DateTimeField(blank=True, null=True, verbose_name='수정날짜')),
-                ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='board.question')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", models.TextField(verbose_name="내용")),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="작성날짜"),
+                ),
+                (
+                    "modified_at",
+                    models.DateTimeField(blank=True, null=True, verbose_name="수정날짜"),
+                ),
+                (
+                    "question",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="board.question"
+                    ),
+                ),
             ],
         ),
     ]
