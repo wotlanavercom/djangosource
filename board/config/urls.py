@@ -22,6 +22,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("board/", include("board.urls")),
     path("users/", include("users.urls")),
+    path("blogs/", include("blogs.urls")),
     # http://127.0.0.1:8000/
     path("", index, name="index"),
 ]

@@ -30,3 +30,10 @@ recommandAll.forEach((item) => {
     }
   });
 });
+
+// 목록으로 버튼 클릭시 actionForm submit
+document.querySelector(".btn-primary").addEventListener("click", (e) => {
+  e.preventDefault();
+
+  document.querySelector("#actionForm").submit();
+});

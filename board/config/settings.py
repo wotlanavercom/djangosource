@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "board",
     "users",
     "django.contrib.humanize",
+    "blogs",
 ]
 
 MIDDLEWARE = [
