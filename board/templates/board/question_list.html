@@ -3,7 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% block contents %}
-  <div class="my-3">   
+  <div class="my-3">
     <div class="row mt-3 justify-content-between">
       <div class="col-md-3">
         <select class="form-control so">
@@ -14,11 +14,14 @@
       </div>
       <div class="col-md-8">
         <div class="input-group mb-3">
-          <input type="text" name="" id="top_keyword" class="form-control" value="{{keyword|default_if_none:''}}">        
-          <button class="btn btn-outline-secondary" type="submit" id="btn_search">찾기</button>        
-        </div>    
+          <input type="text" name="" id="top_keyword" class="form-control" value="{{keyword|default_if_none:''}}">
+          <button class="btn btn-outline-secondary" type="submit" id="btn_search">찾기</button>       
+        </div>
       </div>
-    </div> 
+    </div>
+
+    
+    
     <table class="table">
       <thead>
         <tr class="table-success">
@@ -36,11 +39,11 @@
             <tr>
               <th scope="row">{{question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1}}</th>
               <td>
-                <!-- 질문 추천 수 보여주기 -->
+                <!--질문 추천 수 보여주기-->
                 {% if question.voter.all.count %}
-                <span class="badge text-bg-warning px-2 py-1">
-                  {{question.voter.all.count}}
-                </span>
+                  <span class="badge text-bg-warning px-2 py-1">
+                    {{question.voter.all.count}}
+                  </span>
                 {% endif %}
               </td>
               <td>
@@ -96,7 +99,7 @@
     </div>
   </div>
 
-  <!--페이지 번호 클릭 / 검색/ 정렬 시 이동할 폼-->
+  <!--페이지 번호 클릭 / 검색 / 정렬 시 이동할 폼-->
   <form action="{% url 'board:index' %}" method="get" id="actionForm">
     <input type="hidden" name="keyword" value="{{keyword|default_if_none:''}}" id="keyword">
     <input type="hidden" name="page" value="{{page}}" id="page">

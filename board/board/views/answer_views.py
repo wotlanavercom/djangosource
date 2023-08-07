@@ -1,15 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from ..models import Question, Answer
 from ..forms import AnswerForm
-
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.contrib import messages
 
 
-
-
-##################### 답변
 @login_required(login_url="users:login")
 def answer_create(request, qid):
     """
@@ -41,7 +37,9 @@ def answer_create(request, qid):
             answer.save()
             # return redirect("board:detail", qid=qid)
             # detail 앵커 이용
-            return redirect("{}#answer_{}".format(resolve_url("board:detail",qid=qid), answer.id))
+            return redirect(
+                "{}#answer_{}".format(resolve_url("board:detail", qid=qid), answer.id)
+            )
     else:
         form = AnswerForm()
     context = {"question": question, "form": form}
@@ -66,7 +64,11 @@ def answer_edit(request, aid):
             answer.modified_at = timezone.now()
             answer.save()
             # return redirect("board:detail", qid=answer.question_id)
-            return redirect("{}_#answer{}".format(resolve_url("board:detail", qid=answer.question_id),answer.id))
+            return redirect(
+                "{}#answer_{}".format(
+                    resolve_url("board:detail", qid=answer.question_id), answer.id
+                )
+            )
     else:
         form = AnswerForm(instance=answer)
 
@@ -84,13 +86,15 @@ def answer_delete(request, aid):
     # qid = answer.question.id
     return redirect("board:detail", qid=answer.question.id)
 
+
 # 답변 추천
 @login_required(login_url="users:login")
-def vote_answer(request,aid):
-    # question 찾기
-    answer = get_object_or_404(Answer,id=aid)
+def vote_answer(request, aid):
+    # answer 찾기
+    answer = get_object_or_404(Answer, id=aid)
 
-    # 로그인 사용자와 질문작성자가 동일할 때 본인이 작성한 글은 추천 불가 라는 메세지 보여주기
+    # 로그인 사용자와 답변 작성자가 동일할 때
+    # 본인이 작성한 글은 추천 불가 라는 메세지 보여주기
     if request.user == answer.author:
         messages.error(request, "본인이 작성한 글은 추천할 수 없습니다.")
     else:

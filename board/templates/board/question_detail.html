@@ -15,7 +15,7 @@
   </h2>
   <!-- 추천 영역-->
   <div class="row my-3">
-    <!-- 자신의 글 추천할 수 없음 메세지 영역 -->
+    <!-- 자신의 글 추천할 수 없음 메세지 영역-->
     {% if messages %}
       <div class="alert alert-danger my-3">
         {% for msg in messages %}
@@ -84,7 +84,7 @@
                     {{comment.created_at}}
                     {% if comment.modified_at %}
                       (수정 :
-                      {{comment.modified_at}})
+                      {{comment.modified_at|date}})
                     {% endif %}
                   </span>
                   {% if request.user == comment.author %}
@@ -115,7 +115,7 @@
     <div class="row my-3">
       <div class="col-1">
         <div class="bg-light text-center p-3 border font-weight-bolder mb-1">
-          <!--추천수 : selec count(*) from board_answer_voter where answer_id = 1 -->
+          <!--추천수 : select count(*) from board_answer_voter where answer_id = 205 -->
           {{answer.voter.count}}
         </div>
         <div class="d-grid d-block">
@@ -200,11 +200,11 @@
     <input type="submit" value="답변등록" class="btn btn-success" {% if not user.is_authenticated %} disabled="disabled" {% endif %}>
   </form>
 
-  <!-- 목록으로 클릭시 이동 폼 -->
+  <!-- 목록으로 클릭시 이동 폼-->
   <form action="{% url 'board:index' %}" method="get" id="actionForm">
     <input type="hidden" name="keyword" value="{{keyword|default_if_none:''}}" id="keyword">
-    <input type="hidden" name="page" value="{{page}}" id="page">
-    <input type="hidden" name="sort" value="{{sort}}" id="sort">
+    <input type="hidden" name="page" value="{{page|default_if_none:''}}" id="page">
+    <input type="hidden" name="sort" value="{{sort|default_if_none:''}}" id="sort">
   </form>
 
 {% endblock contents %}

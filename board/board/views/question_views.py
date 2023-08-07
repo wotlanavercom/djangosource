@@ -1,26 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from ..models import Question
 from ..forms import QuestionForm
-
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.contrib import messages
-
-"""
-페이지 나누기
-Paginator 클래스
-Paginator(전체리스트, 페이지당 보여줄개수)
-
-has_previous : 이전 페이지 유무
-has_next : 다음 페이지 유무
-
-previous_page_number : 이전 페이지 번호
-next_page_number : 다음 페이지 번호
-number : 현재 페이지 번호
-page_range : 페이지 범위
-count : 전체 게시물 개수
-start_index : 현재 페이지 인덱스(1부터 시작)
-"""
 
 
 @login_required(login_url="users:login")
@@ -89,15 +72,15 @@ def question_delete(request, qid):
 
 # 질문 추천
 @login_required(login_url="users:login")
-def vote_question(request,qid):
+def vote_question(request, qid):
     # question 찾기
-    question = get_object_or_404(Question,id=qid)
+    question = get_object_or_404(Question, id=qid)
 
     # 로그인 사용자와 질문작성자가 동일할 때 본인이 작성한 글은 추천 불가 라는 메세지 보여주기
     if request.user == question.author:
-        messages.error(request,"본인이 작성한 글은 추천할 수 없습니다.")
+        messages.error(request, "본인이 작성한 글은 추천할 수 없습니다.")
     else:
         # 추천 user 추가
         question.voter.add(request.user)
     # detail 이동
-    return redirect("board:detail",qid=qid)
+    return redirect("board:detail", qid=qid)

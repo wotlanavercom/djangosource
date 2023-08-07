@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from ..models import Question,QuestionCount
+from ..models import Question, QuestionCount
+
 from django.core.paginator import Paginator
 
 # 필터링 여러 개 조건 사용할 때 이용
-from django.db.models import Q,Count
+from django.db.models import Q, Count
+
 from tools.utils import get_client_ip
 
 
@@ -38,35 +40,43 @@ def index(request):
     # question_list = Question.objects.all()
 
     # select * from question order by created_at desc
-    if sort == "recommend": # 추천순
-        question_list = Question.objects.annotate(num_voter = Count("voter")).order_by("-num_voter","-created_at")
-    elif sort == "popular": # 인기순
-        question_list = Question.objects.annotate(num_answer = Count("answer")).order_by("-num_answer","-created_at")
-    else: # 최신순
+    if sort == "recommend":  # 추천순
+        question_list = Question.objects.annotate(num_voter=Count("voter")).order_by(
+            "-num_voter", "-created_at"
+        )
+    elif sort == "popular":  # 인기순
+        question_list = Question.objects.annotate(num_answer=Count("answer")).order_by(
+            "-num_answer", "-created_at"
+        )
+    else:  # 최신순
         question_list = Question.objects.order_by("-created_at")
 
     # 전체 질문 리스트에서 검색어를 기준으로 필터링 하기
-    # 제목, 내용, 질문작성자, 답변작성자
-    # __contains : 대소문자 구별, __icontains : 대소문자 구별 없이
+    # 제목,내용,질문작성자,답변작성자
+    # __contains : 대소문자 구별, __icontains : 대소문자 구별없이
     if keyword:
         question_list = question_list.filter(
-            Q(subject__icontains = keyword)|
-            Q(content__icontains = keyword)|
-            Q(author__username__icontains = keyword)|
-            Q(answer__author__username__icontains = keyword)
+            Q(subject__icontains=keyword)
+            | Q(content__icontains=keyword)
+            | Q(author__username__icontains=keyword)
+            | Q(answer__author__username__icontains=keyword)
         ).distinct()
 
     paginator = Paginator(question_list, 10)
     # pageinator 사용자가 요청한 페이지 정보 담기
     page_obj = paginator.get_page(page)
 
-    context = {"question_list": page_obj, "page":page, "keyword":keyword, "sort":sort}
+    context = {
+        "question_list": page_obj,
+        "page": page,
+        "keyword": keyword,
+        "sort": sort,
+    }
 
     return render(request, "board/question_list.html", context)
 
 
 def question_detail(request, qid):
-    
     page = request.GET.get("page")
     keyword = request.GET.get("keyword")
     sort = request.GET.get("sort")
@@ -94,7 +104,11 @@ def question_detail(request, qid):
             question.view_cnt = 1
         question.save()
 
-    context = {"question": question, "page":page, "keyword":keyword, "sort":sort}
+    context = {
+        "question": question,
+        "page": page,
+        "keyword": keyword,
+        "sort": sort,
+    }
 
     return render(request, "board/question_detail.html", context)
-

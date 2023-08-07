@@ -1,7 +1,12 @@
 from django.urls import path
-from .views.base_views import index,question_detail
-from .views.question_views import question_create,question_edit,question_delete,vote_question
-from .views.answer_views import answer_create,answer_edit,answer_delete,vote_answer
+from .views.base_views import index, question_detail
+from .views.question_views import (
+    question_create,
+    question_edit,
+    question_delete,
+    vote_question,
+)
+from .views.answer_views import answer_create, answer_edit, answer_delete, vote_answer
 from .views.comment_views import (
     comment_create_question,
     comment_edit_question,
@@ -31,23 +36,47 @@ urlpatterns = [
     path("answer/modify/<int:aid>/", answer_edit, name="answer_modify"),
     # http://127.0.0.1:8000/board/answer/delete/답변번호/
     path("answer/delete/<int:aid>/", answer_delete, name="answer_delete"),
-    #  질문 댓글
+    # 질문 댓글
     # 질문 댓글 추가
-    path("comment/create/question/<int:qid>/", comment_create_question, name="comment_create_question"),
+    path(
+        "comment/create/question/<int:qid>/",
+        comment_create_question,
+        name="comment_create_question",
+    ),
     # 질문 댓글 수정
-    path("comment/edit/question/<int:comment_id>/", comment_edit_question, name="comment_edit_question"),
+    path(
+        "comment/edit/question/<int:comment_id>/",
+        comment_edit_question,
+        name="comment_edit_question",
+    ),
     # 질문 댓글 삭제
-    path("comment/delete/question/<int:comment_id>/", comment_delete_question, name="comment_delete_question"),
+    path(
+        "comment/delete/question/<int:comment_id>/",
+        comment_delete_question,
+        name="comment_delete_question",
+    ),
     # 답변 댓글
     # 답변 댓글 추가
-    path("comment/create/answer/<int:aid>/", comment_create_answer, name="comment_create_answer"),
+    path(
+        "comment/create/answer/<int:aid>/",
+        comment_create_answer,
+        name="comment_create_answer",
+    ),
     # 답변 댓글 수정
-    path("comment/edit/answer/<int:comment_id>/", comment_edit_answer, name="comment_edit_answer"),
+    path(
+        "comment/edit/answer/<int:comment_id>/",
+        comment_edit_answer,
+        name="comment_edit_answer",
+    ),
     # 답변 댓글 삭제
-    path("comment/delete/answer/<int:comment_id>/", comment_delete_answer, name="comment_delete_answer"),
+    path(
+        "comment/delete/answer/<int:comment_id>/",
+        comment_delete_answer,
+        name="comment_delete_answer",
+    ),
     # 추천
     # 질문 추천
-    path("vote/question/<int:qid>/",vote_question, name="vote_question"),
+    path("vote/question/<int:qid>/", vote_question, name="vote_question"),
     # 답변 추천
-    path("vote/answer/<int:aid>/",vote_answer, name="vote_answer"),
+    path("vote/answer/<int:aid>/", vote_answer, name="vote_answer"),
 ]
